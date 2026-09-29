@@ -14,7 +14,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f4f4f4;
   color: #222;
 }
 
@@ -22,74 +22,88 @@ header {
   background: #111;
   color: white;
   text-align: center;
-  padding: 25px 15px;
+  padding: 28px 15px;
 }
 
 header h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 30px;
 }
 
 header p {
-  margin: 8px 0 0;
-  color: #ccc;
+  margin: 10px 0 0;
+  color: #ddd;
+  font-size: 17px;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 20px;
+  padding: 18px;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 25px;
+  margin: 25px 0;
 }
+
+/* المنتجات */
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
 .product {
   background: white;
-  border-radius: 15px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
   padding-bottom: 15px;
 }
 
+/* صور كبيرة وواضحة */
+
 .product img {
+  display: block;
   width: 100%;
-  height: 240px;
+  height: 380px;
   object-fit: contain;
   background: white;
+  cursor: zoom-in;
 }
+
+/* اسم الساعة */
 
 .product h3 {
   text-align: center;
-  margin: 12px 5px 5px;
+  margin: 15px 5px 8px;
+  font-size: 19px;
 }
+
+/* السعر */
 
 .price {
   text-align: center;
-  color: #c58b00;
-  font-size: 20px;
+  color: #b8860b;
+  font-size: 22px;
   font-weight: bold;
-  margin: 8px;
+  margin: 10px;
 }
+
+/* الأزرار */
 
 button {
   display: block;
   width: calc(100% - 30px);
   margin: 10px auto;
-  padding: 12px;
+  padding: 13px;
   border: none;
   border-radius: 10px;
   background: #111;
   color: white;
-  font-size: 16px;
+  font-size: 17px;
   cursor: pointer;
 }
 
@@ -97,11 +111,13 @@ button:hover {
   background: #333;
 }
 
+/* السلة */
+
 .cart {
   background: white;
   margin-top: 35px;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 18px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.1);
 }
 
@@ -110,7 +126,7 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  padding: 12px 0;
   gap: 10px;
 }
 
@@ -118,27 +134,29 @@ button:hover {
   width: auto;
   margin: 0;
   background: #b00020;
-  padding: 7px 12px;
+  padding: 8px 13px;
 }
 
 .total {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: bold;
   text-align: center;
-  margin: 20px 0;
+  margin: 22px 0;
 }
+
+/* الطلب */
 
 .order {
   background: white;
   margin-top: 25px;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 18px;
 }
 
 .order input,
 .order textarea {
   width: 100%;
-  padding: 13px;
+  padding: 14px;
   margin: 8px 0;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -149,18 +167,103 @@ button:hover {
   background: #168c3b;
 }
 
+.whatsapp:hover {
+  background: #116e2e;
+}
+
 footer {
   text-align: center;
-  padding: 25px;
-  margin-top: 30px;
+  padding: 28px;
+  margin-top: 35px;
   background: #111;
   color: white;
 }
 
 .loading {
   text-align: center;
-  padding: 30px;
-  font-size: 18px;
+  padding: 40px;
+  font-size: 19px;
+}
+
+/* نافذة تكبير الصورة */
+
+.image-viewer {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.92);
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.image-viewer img {
+  max-width: 100%;
+  max-height: 95%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.close-image {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* الهاتف */
+
+@media (max-width: 700px) {
+
+  .container {
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .product img {
+    height: 430px;
+  }
+
+  .product h3 {
+    font-size: 20px;
+  }
+
+  .price {
+    font-size: 23px;
+  }
+
+  button {
+    font-size: 17px;
+    padding: 14px;
+  }
+}
+
+/* الأجهزة المتوسطة */
+
+@media (min-width: 701px) and (max-width: 950px) {
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product img {
+    height: 350px;
+  }
 }
 </style>
 </head>
@@ -177,10 +280,15 @@ footer {
   <h2>🛍️ الساعات</h2>
 
   <div id="products" class="products">
-    <div class="loading">جاري تحميل الساعات...</div>
+    <div class="loading">
+      جاري تحميل الساعات...
+    </div>
   </div>
 
+  <!-- السلة -->
+
   <div class="cart">
+
     <h2>🛒 سلة المشتريات</h2>
 
     <div id="cartItems">
@@ -188,24 +296,46 @@ footer {
     </div>
 
     <div class="total">
-      المجموع: <span id="total">0</span> درهم
+      المجموع:
+      <span id="total">0</span>
+      درهم
     </div>
+
   </div>
+
+  <!-- معلومات الطلب -->
 
   <div class="order">
 
     <h2>📦 معلومات الطلب</h2>
 
-    <input id="name" type="text" placeholder="الاسم الكامل">
+    <input
+      id="name"
+      type="text"
+      placeholder="الاسم الكامل">
 
-    <input id="phone" type="tel" placeholder="رقم الهاتف">
+    <input
+      id="phone"
+      type="tel"
+      placeholder="رقم الهاتف">
 
-    <input id="address" type="text" placeholder="العنوان في أكادير">
+    <input
+      id="address"
+      type="text"
+      placeholder="العنوان في أكادير">
 
-    <textarea id="note" rows="4" placeholder="ملاحظة إضافية (اختياري)"></textarea>
+    <textarea
+      id="note"
+      rows="4"
+      placeholder="ملاحظة إضافية (اختياري)">
+    </textarea>
 
-    <button class="whatsapp" onclick="confirmOrder()">
+    <button
+      class="whatsapp"
+      onclick="confirmOrder()">
+
       📱 تأكيد الطلب عبر واتساب
+
     </button>
 
   </div>
@@ -216,23 +346,47 @@ footer {
   © 2026 متجر أغادير للساعات
 </footer>
 
+
+<!-- نافذة تكبير الصورة -->
+
+<div
+  id="imageViewer"
+  class="image-viewer"
+  onclick="closeImage()">
+
+  <span class="close-image">×</span>
+
+  <img
+    id="bigImage"
+    src=""
+    alt="صورة الساعة">
+
+</div>
+
+
 <script>
 
 let cart = [];
 
-const productsContainer = document.getElementById("products");
+const productsContainer =
+  document.getElementById("products");
+
+
+/* تحميل جميع صور المستودع */
 
 async function loadProducts() {
 
   try {
 
-    const pathParts = location.pathname
-      .split("/")
-      .filter(Boolean);
+    const pathParts =
+      location.pathname
+        .split("/")
+        .filter(Boolean);
 
     const repo = pathParts[0];
 
-    const username = "akonadn-ctrl";
+    const username =
+      "akonadn-ctrl";
 
     const api =
       "https://api.github.com/repos/" +
@@ -241,14 +395,17 @@ async function loadProducts() {
       repo +
       "/contents/";
 
-    const response = await fetch(api);
+    const response =
+      await fetch(api);
 
-    const files = await response.json();
+    const files =
+      await response.json();
 
-    const images = files.filter(file =>
-      file.type === "file" &&
-      /\.(png|jpg|jpeg|webp)$/i.test(file.name)
-    );
+    const images =
+      files.filter(file =>
+        file.type === "file" &&
+        /\.(png|jpg|jpeg|webp)$/i.test(file.name)
+      );
 
     productsContainer.innerHTML = "";
 
@@ -262,33 +419,80 @@ async function loadProducts() {
 
     images.forEach((image, index) => {
 
-      const product = document.createElement("div");
+      const product =
+        document.createElement("div");
 
       product.className = "product";
 
-      const price = 199 + (index % 6) * 20;
+      const price =
+        199 + (index % 6) * 20;
 
       product.innerHTML = `
-        <img src="${image.name}" alt="ساعة">
-        <h3>ساعة أنيقة رقم ${index + 1}</h3>
-        <div class="price">${price} درهم</div>
 
-        <button onclick='addToCart(${JSON.stringify(image.name)}, ${price})'>
+        <img
+          src="${image.name}"
+          alt="ساعة رقم ${index + 1}"
+          onclick="openImage('${image.name}')">
+
+        <h3>
+          ساعة أنيقة رقم ${index + 1}
+        </h3>
+
+        <div class="price">
+          ${price} درهم
+        </div>
+
+        <button
+          onclick='addToCart(${JSON.stringify(image.name)}, ${price})'>
+
           🛒 أضف إلى السلة
+
         </button>
+
       `;
 
       productsContainer.appendChild(product);
 
     });
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     productsContainer.innerHTML =
       "<p>حدث خطأ أثناء تحميل الصور.</p>";
 
   }
 }
+
+
+/* تكبير الصورة */
+
+function openImage(imageName) {
+
+  const viewer =
+    document.getElementById("imageViewer");
+
+  const bigImage =
+    document.getElementById("bigImage");
+
+  bigImage.src = imageName;
+
+  viewer.style.display = "flex";
+}
+
+
+/* إغلاق الصورة */
+
+function closeImage() {
+
+  document.getElementById("imageViewer")
+    .style.display = "none";
+
+}
+
+
+/* إضافة للسلة */
 
 function addToCart(name, price) {
 
@@ -300,6 +504,9 @@ function addToCart(name, price) {
   updateCart();
 }
 
+
+/* حذف من السلة */
+
 function removeFromCart(index) {
 
   cart.splice(index, 1);
@@ -307,11 +514,16 @@ function removeFromCart(index) {
   updateCart();
 }
 
+
+/* تحديث السلة */
+
 function updateCart() {
 
-  const cartItems = document.getElementById("cartItems");
+  const cartItems =
+    document.getElementById("cartItems");
 
-  const totalElement = document.getElementById("total");
+  const totalElement =
+    document.getElementById("total");
 
   if (cart.length === 0) {
 
@@ -331,18 +543,30 @@ function updateCart() {
 
     total += item.price;
 
-    const div = document.createElement("div");
+    const div =
+      document.createElement("div");
 
-    div.className = "cart-item";
+    div.className =
+      "cart-item";
 
     div.innerHTML = `
-      <span>${item.name}</span>
-      <span>${item.price} درهم</span>
 
-      <button class="remove"
+      <span>
+        ${item.name}
+      </span>
+
+      <span>
+        ${item.price} درهم
+      </span>
+
+      <button
+        class="remove"
         onclick="removeFromCart(${index})">
+
         حذف
+
       </button>
+
     `;
 
     cartItems.appendChild(div);
@@ -350,33 +574,43 @@ function updateCart() {
   });
 
   totalElement.textContent = total;
-
 }
+
+
+/* إرسال الطلب إلى واتساب */
 
 function confirmOrder() {
 
   const name =
-    document.getElementById("name").value.trim();
+    document.getElementById("name")
+      .value.trim();
 
   const phone =
-    document.getElementById("phone").value.trim();
+    document.getElementById("phone")
+      .value.trim();
 
   const address =
-    document.getElementById("address").value.trim();
+    document.getElementById("address")
+      .value.trim();
 
   const note =
-    document.getElementById("note").value.trim();
+    document.getElementById("note")
+      .value.trim();
 
   if (!name || !phone || !address) {
 
-    alert("المرجو إدخال الاسم ورقم الهاتف والعنوان");
+    alert(
+      "المرجو إدخال الاسم ورقم الهاتف والعنوان"
+    );
 
     return;
   }
 
   if (cart.length === 0) {
 
-    alert("المرجو إضافة ساعة إلى السلة");
+    alert(
+      "المرجو إضافة ساعة إلى السلة"
+    );
 
     return;
   }
@@ -385,22 +619,31 @@ function confirmOrder() {
     "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
 
   message +=
-    "الاسم: " + name + "\n";
+    "الاسم: " +
+    name +
+    "\n";
 
   message +=
-    "الهاتف: " + phone + "\n";
+    "الهاتف: " +
+    phone +
+    "\n";
 
   message +=
-    "العنوان: " + address + "\n";
+    "العنوان: " +
+    address +
+    "\n";
 
   if (note) {
 
     message +=
-      "ملاحظة: " + note + "\n";
+      "ملاحظة: " +
+      note +
+      "\n";
 
   }
 
-  message += "\nالمنتجات:\n";
+  message +=
+    "\nالمنتجات:\n";
 
   cart.forEach((item, index) => {
 
@@ -415,14 +658,23 @@ function confirmOrder() {
   });
 
   const total =
-    cart.reduce((sum, item) => sum + item.price, 0);
+    cart.reduce(
+      (sum, item) =>
+        sum + item.price,
+      0
+    );
 
   message +=
     "\nالمجموع: " +
     total +
     " درهم";
 
-  const whatsappNumber = "212783084921";
+
+  /* رقم واتساب */
+
+  const whatsappNumber =
+    "212783084921";
+
 
   const url =
     "https://wa.me/" +
@@ -430,12 +682,17 @@ function confirmOrder() {
     "?text=" +
     encodeURIComponent(message);
 
+
   window.open(url, "_blank");
 }
+
+
+/* تشغيل الموقع */
 
 loadProducts();
 
 </script>
 
 </body>
-  </html>
+</html>
+            
