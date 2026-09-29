@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>متجر أغادير للساعات</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  margin: 8px 0 0;
+  color: #ccc;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.product {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  padding-bottom: 15px;
+}
+
+.product img {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  background: white;
+}
+
+.product h3 {
+  text-align: center;
+  margin: 12px 5px 5px;
+}
+
+.price {
+  text-align: center;
+  color: #c58b00;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px;
+}
+
+button {
+  display: block;
+  width: calc(100% - 30px);
+  margin: 10px auto;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #111;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #333;
+}
+
+.cart {
+  background: white;
+  margin-top: 35px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  gap: 10px;
+}
+
+.remove {
+  width: auto;
+  margin: 0;
+  background: #b00020;
+  padding: 7px 12px;
+}
+
+.total {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.order {
+  background: white;
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.order input,
+.order textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.whatsapp {
+  background: #168c3b;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  margin-top: 30px;
+  background: #111;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>⌚ متجر أغادير للساعات</h1>
+  <p>ساعات أنيقة بأسعار مناسبة</p>
+</header>
+
+<div class="container">
+
+  <h2>🛍️ الساعات</h2>
+
+  <div id="products" class="products">
+    <div class="loading">جاري تحميل الساعات...</div>
+  </div>
+
+  <div class="cart">
+    <h2>🛒 سلة المشتريات</h2>
+
+    <div id="cartItems">
+      <p>السلة فارغة</p>
+    </div>
+
+    <div class="total">
+      المجموع: <span id="total">0</span> درهم
+    </div>
+  </div>
+
+  <div class="order">
+
+    <h2>📦 معلومات الطلب</h2>
+
+    <input id="name" type="text" placeholder="الاسم الكامل">
+
+    <input id="phone" type="tel" placeholder="رقم الهاتف">
+
+    <input id="address" type="text" placeholder="العنوان في أكادير">
+
+    <textarea id="note" rows="4" placeholder="ملاحظة إضافية (اختياري)"></textarea>
+
+    <button class="whatsapp" onclick="confirmOrder()">
+      📱 تأكيد الطلب عبر واتساب
+    </button>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 متجر أغادير للساعات
+</footer>
+
+<script>
+
+let cart = [];
+
+const productsContainer = document.getElementById("products");
+
+async function loadProducts() {
+
+  try {
+
+    const pathParts = location.pathname
+      .split("/")
+      .filter(Boolean);
+
+    const repo = pathParts[0];
+
+    const username = "akonadn-ctrl";
+
+    const api =
+      "https://api.github.com/repos/" +
+      username +
+      "/" +
+      repo +
+      "/contents/";
+
+    const response = await fetch(api);
+
+    const files = await response.json();
+
+    const images = files.filter(file =>
+      file.type === "file" &&
+      /\.(png|jpg|jpeg|webp)$/i.test(file.name)
+    );
+
+    productsContainer.innerHTML = "";
+
+    if (images.length === 0) {
+
+      productsContainer.innerHTML =
+        "<p>لم يتم العثور على صور في المستودع.</p>";
+
+      return;
+    }
+
+    images.forEach((image, index) => {
+
+      const product = document.createElement("div");
+
+      product.className = "product";
+
+      const price = 199 + (index % 6) * 20;
+
+      product.innerHTML = `
+        <img src="${image.name}" alt="ساعة">
+        <h3>ساعة أنيقة رقم ${index + 1}</h3>
+        <div class="price">${price} درهم</div>
+
+        <button onclick='addToCart(${JSON.stringify(image.name)}, ${price})'>
+          🛒 أضف إلى السلة
+        </button>
+      `;
+
+      productsContainer.appendChild(product);
+
+    });
+
+  } catch (error) {
+
+    productsContainer.innerHTML =
+      "<p>حدث خطأ أثناء تحميل الصور.</p>";
+
+  }
+}
+
+function addToCart(name, price) {
+
+  cart.push({
+    name: name,
+    price: price
+  });
+
+  updateCart();
+}
+
+function removeFromCart(index) {
+
+  cart.splice(index, 1);
+
+  updateCart();
+}
+
+function updateCart() {
+
+  const cartItems = document.getElementById("cartItems");
+
+  const totalElement = document.getElementById("total");
+
+  if (cart.length === 0) {
+
+    cartItems.innerHTML =
+      "<p>السلة فارغة</p>";
+
+    totalElement.textContent = "0";
+
+    return;
+  }
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+
+    total += item.price;
+
+    const div = document.createElement("div");
+
+    div.className = "cart-item";
+
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>${item.price} درهم</span>
+
+      <button class="remove"
+        onclick="removeFromCart(${index})">
+        حذف
+      </button>
+    `;
+
+    cartItems.appendChild(div);
+
+  });
+
+  totalElement.textContent = total;
+
+}
+
+function confirmOrder() {
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const address =
+    document.getElementById("address").value.trim();
+
+  const note =
+    document.getElementById("note").value.trim();
+
+  if (!name || !phone || !address) {
+
+    alert("المرجو إدخال الاسم ورقم الهاتف والعنوان");
+
+    return;
+  }
+
+  if (cart.length === 0) {
+
+    alert("المرجو إضافة ساعة إلى السلة");
+
+    return;
+  }
+
+  let message =
+    "السلام عليكم، أريد تأكيد هذا الطلب:\n\n";
+
+  message +=
+    "الاسم: " + name + "\n";
+
+  message +=
+    "الهاتف: " + phone + "\n";
+
+  message +=
+    "العنوان: " + address + "\n";
+
+  if (note) {
+
+    message +=
+      "ملاحظة: " + note + "\n";
+
+  }
+
+  message += "\nالمنتجات:\n";
+
+  cart.forEach((item, index) => {
+
+    message +=
+      (index + 1) +
+      "- " +
+      item.name +
+      " - " +
+      item.price +
+      " درهم\n";
+
+  });
+
+  const total =
+    cart.reduce((sum, item) => sum + item.price, 0);
+
+  message +=
+    "\nالمجموع: " +
+    total +
+    " درهم";
+
+  const whatsappNumber = "212783084921";
+
+  const url =
+    "https://wa.me/" +
+    whatsappNumber +
+    "?text=" +
+    encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+loadProducts();
+
+</script>
+
+</body>
+  </html>
